@@ -4,16 +4,15 @@ using System.Threading;
 using System.Reflection;
 using TerrariaApi.Server;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 
 namespace AntiWOF
 {
-	[ApiVersion(1, 23)]
+	[ApiVersion(1, 26)]
 	public class Plugin : TerrariaPlugin
 	{
 		public override Version Version
 		{
-			get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version; }
+			get { return Assembly.GetExecutingAssembly().GetName().Version; }
 		}
 
 		public override string Name
