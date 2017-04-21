@@ -4,10 +4,12 @@ using System.Threading;
 using System.Reflection;
 using TerrariaApi.Server;
 using System.Threading.Tasks;
+using TShockAPI;
+using static Terraria.ID.ItemID;
 
 namespace AntiWOF
 {
-	[ApiVersion(1, 26)]
+	[ApiVersion(2, 1)]
 	public class Plugin : TerrariaPlugin
 	{
 		public override Version Version
@@ -43,15 +45,15 @@ namespace AntiWOF
 			ServerApi.Hooks.NpcLootDrop.Register(this, LootHook, DefaultOrder);
 		}
 
-		private void LootHook(NpcLootDropEventArgs e)
+		private static async void LootHook(NpcLootDropEventArgs e)
 		{
-			if (e == null || e.ItemId != 367) return;
-			Task.Factory.StartNew(() => UndoBox((int)e.Position.X, (int)e.Position.Y, e.Width, e.Height)).LogExceptions();
+			if (e == null || e.ItemId != Pwnhammer || e.ItemId != WallOfFleshBossBag) return;
+		  await UndoBox((int) e.Position.X, (int) e.Position.Y, e.Width, e.Height);
 		}
 
-		private void UndoBox(int X, int Y, int W, int H)
+		private static async Task UndoBox(int X, int Y, int W, int H)
 		{
-			Thread.Sleep(5000); // Give the player 5 seconds to pick up the loot.
+			await Task.Delay(5000); // Give the player 5 seconds to pick up the loot.
 			/* The code below is partially a copy-paste of Terraria code */
 			int num22 = (X + (W / 2)) / 16;
 			int num23 = (Y + (H / 2)) / 16;
@@ -67,11 +69,14 @@ namespace AntiWOF
 						tile.active(false);
 					}
 
-					try
-					{
-						NetMessage.SendTileSquare(-1, k, l, 1);
-					}
-					catch { }
+				  try
+				  {
+				    NetMessage.SendTileSquare(-1, k, l, 1);
+				  }
+				  catch (Exception ex)
+				  {
+				    TShock.Log.ConsoleError(ex.ToString());
+				  }
 				}
 			}
 
