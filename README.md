@@ -1,6 +1,9 @@
-###AntiWOF-2
+# AntiWOF-2 #
 
-TSAPI plugin. Removes WoF boxes automatically.  
+![](https://img.shields.io/badge/Version-1.1.2-blue.svg) ![](https://img.shields.io/badge/API-2.1-green.svg)
+
+**Original Author:** Simon311
+
+Removes WoF boxes automatically.  
 Gives the player 5 seconds to pick up the loot.  
-No commands or permissions (doesn't even require TShock).  
-Requires latest TSAPI.  
+No commands or permissions.  
